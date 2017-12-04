@@ -1,6 +1,5 @@
 server:
  port: 8080
-name: haha
 # 配置config server的git仓库
 spring:
  application:

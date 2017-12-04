@@ -1,4 +1,4 @@
-package session01.server.config;
+package session01.client.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
