@@ -1,6 +1,6 @@
 server:
  port: 8080
-
+name: haha
 # 配置config server的git仓库
 spring:
  application:
@@ -9,7 +9,7 @@ spring:
   config:
    server:
     git:
-     uri: https://github.com/zuiliushang/spring-cloud-learn
-     searchPath: config-repo/xusihan
+     uri: https://github.com/zuiliushang/spring-cloud-learn/
+     searchPath: config-repo
      force-pull: true
      
