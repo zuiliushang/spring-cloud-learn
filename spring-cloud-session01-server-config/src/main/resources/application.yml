@@ -9,4 +9,7 @@ spring:
   config:
    server:
     git:
-     uri: https://github.com/zuiliushang/spring-cloud-learn/config-repo/{application}
+     uri: https://github.com/zuiliushang/spring-cloud-learn
+     searchPath: config-repo/xusihan
+     force-pull: true
+     
