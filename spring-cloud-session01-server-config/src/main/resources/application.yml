@@ -1,0 +1,12 @@
+server:
+ port: 8080
+
+# 配置config server的git仓库
+spring:
+ application:
+  name: xusihan
+ cloud: 
+  config:
+   server:
+    git:
+     uri: https://github.com/zuiliushang/spring-cloud-learn/config-repo/{application}
