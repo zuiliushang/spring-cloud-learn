@@ -9,6 +9,4 @@ spring:
    server:
     git:
      uri: https://github.com/zuiliushang/spring-cloud-learn/
-     searchPath: config-repo
-     force-pull: true
-     
+     searchPaths: config-repo
