@@ -81,4 +81,34 @@ eureka:
 
 ## 注册一个安全的应用
 
-如果你的应用想要通过HTTPS交流你需要设置两个标志在```EurekaInstanceConfig```，即分别设置```eureka.instance.[nonSecurePortEnabled,securePortEnabled]=[false,true]```。这个将会让Eureka发布实例信息展示在一个明确的引用来加密交流。Spring Cloud```DiscoveryClient```总会返回一个URI开头为```https```关于
+如果你的应用想要通过HTTPS交流你需要设置两个标志在```EurekaInstanceConfig```，即分别设置```eureka.instance.[nonSecurePortEnabled,securePortEnabled]=[false,true]```。这个将会让Eureka发布实例信息展示在一个明确的引用来加密交流。Spring Cloud```DiscoveryClient```总会返回一个URI开头为```https```关于一个服务配置，和Eureka(本地)实例信息将会有一个健康检查URL。
+
+因为这种方式的Eureka工作在内部，它仍会公开一个不安全的URL关于状态和首页除非你也明确地重写这些。你可以使用占位符来配置eureka实例url，比如:
+application.yml
+<pre>
+eureka:
+ instance:
+  statusPageUrl: https://${eureka.hostname}/info
+  healthCheckUrl: https://${eureka.hostname}/health
+  homePageUrl: https://${eureka.hostname}/
+</pre>
+
+(注意```${eureka.hostname}```)最后一个版本只有一个占位符。你可以获得同样的Spring 占位符，例如使用```${eureka.instance.hostName}```.)
+
+> 如果你的应用运行在一个代理和SSL代理(例如如果你运行在Cloud Foundry或者其它Paas)你将需要确认代理"传递"头被应用拦截并且处理。一个嵌入式的Tomcat容器在Spring Boot应用自动化做这个如果它有明确的'X-Forwarded-\*'配置头。你有错的一个信号是，你的应用程序所呈现的链接将是错误的(错误的主机、端口或协议)。
+
+## Eureka Health Check
+
+默认,Eureka使用客户端心跳来决定一个客户端注册。除非指定否则Discovery客户端不会在Spring引导执行器中传播当前应用程序的健康检查状态。这意味着在成功注册之后Eureka总是把应用记录为'UP'状态。这个举动可以通过启动Eureka健康检查来改变，结果将应用程序状态传递给Eureka。因此，其他应用程序都不会将流量发送到其他状态的应用程序。
+
+application.yml
+<pre>
+eureka:
+ client:
+  healthcheck:
+   enabled: true
+</pre>
+
+> ```eureka.client.healthcheck.enabled=true```只能被这只在```application.yml```.设置这个值到```bootstrap.yml```造成不良的副作用例如eureka变成```UNKNOWN```状态。
+
+如果你需要更多的通知健康检查，你可以自定义实现你自己的```com.netfix.appinfo.HealthCheckHandler```.
