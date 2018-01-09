@@ -86,3 +86,11 @@ public class StoreIntegration {
 </pre>
 
 ### Hystrix 超时和Ribbon 客户端
+
+当使用Hystrix命令包装Ribbon客户端时，您需要确保您的Hystrix超时被配置为比配置的Ribbon超时时间更长，包括任何可能的重试时间。例如，如果你的Ribbon连接超时是一秒并且会请求重试三次，那么Hystrix超时时间应该是要长于3秒。
+
+#### 使用Hystrix面板
+
+使用Hystrix Dashboard配置group```org.springframework.cloud```和artifact id```spring-cloud-starter-hystrix-netflix-dashboard```。
+
+运行Hystrix Dashboard需要注解```@EnableHystrixDashboard```添加到Spring Boot主类.可以访问```/hystrix```

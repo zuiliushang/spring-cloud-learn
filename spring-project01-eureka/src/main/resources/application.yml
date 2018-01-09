@@ -1,0 +1,16 @@
+server:
+ port: 8080
+
+management:
+ context-path: /admin
+# 默认会把自己当成客户端注册 关闭
+eureka:
+ instance:
+  hostname: localhost
+#  statusPageUrlPath: ${management.context-path}/info #配置信息地址
+#  healthCheckUrlPath: ${management.context-path}/health
+ client:
+  register-with-eureka: false
+  fetch-registry: false
+  serviceUrl:
+   defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

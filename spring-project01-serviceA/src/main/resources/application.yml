@@ -1,0 +1,12 @@
+server:
+ port: 8084
+
+spring:
+ application:
+  name: serviceA
+
+eureka:
+ client:
+  serviceUrl:
+# defaultZone提供这个服务的地址
+   defaultZone: http://localhost:8080/eureka/
