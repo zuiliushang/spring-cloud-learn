@@ -12,18 +12,25 @@ import org.springframework.web.bind.annotation.RestController;
 @ComponentScan
 @EnableAutoConfiguration
 @RestController
-public class App01 {
+public class AppSA01 {
 
 	@Value("${name}")
 	private String name;
+	
+	@Value("${server.port}")
+	private String port;
 	
 	@GetMapping("/")
 	public String home() {
 		return "Hello world Eureka " + name;
 	}
+	@GetMapping("/hi")
+	public String a1df() {
+		return port+"hi";
+	}
 	
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(App01.class).web(true).run(args);
+		new SpringApplicationBuilder(AppSA01.class).web(true).run(args);
 	}
 	
 }

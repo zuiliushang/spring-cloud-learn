@@ -4,34 +4,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
 @RestController
-public class App01 {
+@EnableFeignClients
+public class AppSB {
 
+	@Autowired
+	SchedualServiceHi schedualServiceHi;
+	
 	@Value("${name}")
 	private String name;
 	
-	@Autowired
-	RestTemplate restTemplate;
-	
-	
+	@GetMapping("/hi")
+	public String hi() {
+		return schedualServiceHi.sayHiFromClientOne("xsu");
+	}
 	@GetMapping("/")
 	public String home() {
-		String serviceA = restTemplate.getForObject("http://localhost:8084/", String.class);
-		//String serviceA = restTemplate.getForObject("http://say-hello/greeting", responseType)
-		return "Hello world Eureka " + name +serviceA;
+		return "Hello world Eureka " + name;
 	}
 	
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(App01.class).web(true).run(args);
+		new SpringApplicationBuilder(AppSB.class).web(true).run(args);
 	}
 	
 }
