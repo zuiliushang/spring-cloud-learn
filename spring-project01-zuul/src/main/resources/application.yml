@@ -1,0 +1,22 @@
+eureka:
+ client:
+  serviceUrl:
+   defaultZone: http://localhost:8080/eureka/
+   
+server:
+ port: 8086
+spring:
+ application:
+  name: SERVICEZUUL
+  
+zuul:
+ routes:
+  xusihan:
+   path: /xusihanz/**
+   serviceId: XUSIHAN
+  serviceA:
+   path: /serviceAz/**
+   serviceId: SERVICEA
+  serviceB:
+   path: /serviceBz/**
+   serviceId: SERVICEB

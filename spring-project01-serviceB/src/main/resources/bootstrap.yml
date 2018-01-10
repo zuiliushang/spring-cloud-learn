@@ -4,3 +4,8 @@ spring:
    label: master
    profile: dev
    uri: http://localhost:8082
+   
+# 开启断路器功能
+feign:
+ hystrix:
+  enabled: true
